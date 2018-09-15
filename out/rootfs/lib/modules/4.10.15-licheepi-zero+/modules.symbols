@@ -1,0 +1,5 @@
+# Aliases for symbols, used by symbol_request().
+alias symbol:lcd_device_register lcd
+alias symbol:lcd_device_unregister lcd
+alias symbol:devm_lcd_device_register lcd
+alias symbol:devm_lcd_device_unregister lcd
