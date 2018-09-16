@@ -1,4 +1,12 @@
-Linux kernel
+# Kernel of Retro-V3s
+
+USE retro_v3s_defconfig:
+
+  make ARCH=arm retro_v3s_defconfig
+  
+Tested under gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf
+
+# Linux kernel
 ============
 
 This file was moved to Documentation/admin-guide/README.rst
@@ -16,3 +24,5 @@ See Documentation/00-INDEX for a list of what is contained in each file.
 Please read the Documentation/process/changes.rst file, as it contains the
 requirements for building and running the kernel, and information about
 the problems which may result by upgrading your kernel.
+
+
