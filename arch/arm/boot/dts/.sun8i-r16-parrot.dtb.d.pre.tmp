@@ -1,0 +1,13 @@
+sun8i-r16-parrot.o: arch/arm/boot/dts/sun8i-r16-parrot.dts \
+ arch/arm/boot/dts/sun8i-a33.dtsi arch/arm/boot/dts/sun8i-a23-a33.dtsi \
+ arch/arm/boot/dts/skeleton.dtsi \
+ arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h \
+ arch/arm/boot/dts/include/dt-bindings/interrupt-controller/irq.h \
+ arch/arm/boot/dts/include/dt-bindings/clock/sun8i-a23-a33-ccu.h \
+ arch/arm/boot/dts/include/dt-bindings/pinctrl/sun4i-a10.h \
+ arch/arm/boot/dts/include/dt-bindings/reset/sun8i-a23-a33-ccu.h \
+ arch/arm/boot/dts/sunxi-common-regulators.dtsi \
+ arch/arm/boot/dts/include/dt-bindings/gpio/gpio.h \
+ arch/arm/boot/dts/include/dt-bindings/input/input.h \
+ arch/arm/boot/dts/include/dt-bindings/input/linux-event-codes.h \
+ arch/arm/boot/dts/axp22x.dtsi

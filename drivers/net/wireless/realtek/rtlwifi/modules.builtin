@@ -1,0 +1,4 @@
+kernel/drivers/net/wireless/realtek/rtlwifi/rtlwifi.ko
+kernel/drivers/net/wireless/realtek/rtlwifi/rtl_usb.ko
+kernel/drivers/net/wireless/realtek/rtlwifi/rtl8192c/rtl8192c-common.ko
+kernel/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/rtl8192cu.ko

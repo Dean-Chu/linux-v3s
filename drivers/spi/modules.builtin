@@ -1,0 +1,3 @@
+kernel/drivers/spi/spi-bitbang.ko
+kernel/drivers/spi/spi-gpio.ko
+kernel/drivers/spi/spi-sun6i.ko

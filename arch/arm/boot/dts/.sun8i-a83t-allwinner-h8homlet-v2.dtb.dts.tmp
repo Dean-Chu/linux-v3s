@@ -1,0 +1,231 @@
+# 1 "arch/arm/boot/dts/sun8i-a83t-allwinner-h8homlet-v2.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "arch/arm/boot/dts/sun8i-a83t-allwinner-h8homlet-v2.dts"
+# 44 "arch/arm/boot/dts/sun8i-a83t-allwinner-h8homlet-v2.dts"
+/dts-v1/;
+# 1 "arch/arm/boot/dts/sun8i-a83t.dtsi" 1
+# 46 "arch/arm/boot/dts/sun8i-a83t.dtsi"
+# 1 "arch/arm/boot/dts/skeleton.dtsi" 1
+# 11 "arch/arm/boot/dts/skeleton.dtsi"
+/ {
+ #address-cells = <1>;
+ #size-cells = <1>;
+ chosen { };
+ aliases { };
+ memory { device_type = "memory"; reg = <0 0>; };
+};
+# 47 "arch/arm/boot/dts/sun8i-a83t.dtsi" 2
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 1
+
+
+
+
+
+
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/irq.h" 1
+# 9 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 2
+# 49 "arch/arm/boot/dts/sun8i-a83t.dtsi" 2
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/pinctrl/sun4i-a10.h" 1
+# 51 "arch/arm/boot/dts/sun8i-a83t.dtsi" 2
+
+/ {
+ interrupt-parent = <&gic>;
+
+ cpus {
+  #address-cells = <1>;
+  #size-cells = <0>;
+
+  cpu@0 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0>;
+  };
+
+  cpu@1 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <1>;
+  };
+
+  cpu@2 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <2>;
+  };
+
+  cpu@3 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <3>;
+  };
+
+  cpu@100 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0x100>;
+  };
+
+  cpu@101 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0x101>;
+  };
+
+  cpu@102 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0x102>;
+  };
+
+  cpu@103 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0x103>;
+  };
+ };
+
+ timer {
+  compatible = "arm,armv7-timer";
+  interrupts = <1 13 ((((1 << (8)) - 1) << 8) | 8)>,
+        <1 14 ((((1 << (8)) - 1) << 8) | 8)>,
+        <1 11 ((((1 << (8)) - 1) << 8) | 8)>,
+        <1 10 ((((1 << (8)) - 1) << 8) | 8)>;
+ };
+
+ clocks {
+  #address-cells = <1>;
+  #size-cells = <1>;
+  ranges;
+
+
+  osc24M: osc24M_clk {
+   #clock-cells = <0>;
+   compatible = "fixed-clock";
+   clock-frequency = <24000000>;
+   clock-output-names = "osc24M";
+  };
+
+
+
+
+
+
+  osc16M: osc16M_clk {
+   #clock-cells = <0>;
+   compatible = "fixed-clock";
+   clock-frequency = <16000000>;
+   clock-output-names = "osc16M";
+  };
+
+  osc16Md512: osc16Md512_clk {
+   #clock-cells = <0>;
+   compatible = "fixed-factor-clock";
+   clock-div = <512>;
+   clock-mult = <1>;
+   clocks = <&osc16M>;
+   clock-output-names = "osc16M-d512";
+  };
+ };
+
+ soc {
+  compatible = "simple-bus";
+  #address-cells = <1>;
+  #size-cells = <1>;
+  ranges;
+
+  pio: pinctrl@01c20800 {
+   compatible = "allwinner,sun8i-a83t-pinctrl";
+   interrupts = <0 15 4>,
+         <0 17 4>,
+         <0 100 4>;
+   reg = <0x01c20800 0x400>;
+   clocks = <&osc24M>;
+   gpio-controller;
+   interrupt-controller;
+   #interrupt-cells = <3>;
+   #gpio-cells = <3>;
+
+   mmc0_pins_a: mmc0@0 {
+    allwinner,pins = "PF0", "PF1", "PF2",
+       "PF3", "PF4", "PF5";
+    allwinner,function = "mmc0";
+    allwinner,drive = <2>;
+    allwinner,pull = <0>;
+   };
+
+   uart0_pins_a: uart0@0 {
+    allwinner,pins = "PF2", "PF4";
+    allwinner,function = "uart0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   uart0_pins_b: uart0@1 {
+    allwinner,pins = "PB9", "PB10";
+    allwinner,function = "uart0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+  };
+
+  timer@01c20c00 {
+   compatible = "allwinner,sun4i-a10-timer";
+   reg = <0x01c20c00 0xa0>;
+   interrupts = <0 18 4>,
+         <0 19 4>;
+   clocks = <&osc24M>;
+  };
+
+  watchdog@01c20ca0 {
+   compatible = "allwinner,sun6i-a31-wdt";
+   reg = <0x01c20ca0 0x20>;
+   interrupts = <0 25 4>;
+   clocks = <&osc24M>;
+  };
+
+  uart0: serial@01c28000 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c28000 0x400>;
+   interrupts = <0 0 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&osc24M>;
+   status = "disabled";
+  };
+
+  gic: interrupt-controller@01c81000 {
+   compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
+   reg = <0x01c81000 0x1000>,
+         <0x01c82000 0x1000>,
+         <0x01c84000 0x2000>,
+         <0x01c86000 0x2000>;
+   interrupt-controller;
+   #interrupt-cells = <3>;
+   interrupts = <1 9 ((((1 << (8)) - 1) << 8) | 4)>;
+  };
+ };
+};
+# 46 "arch/arm/boot/dts/sun8i-a83t-allwinner-h8homlet-v2.dts" 2
+
+/ {
+ model = "Allwinner A83T H8Homlet Proto Dev Board v2.0";
+ compatible = "allwinner,h8homlet-v2", "allwinner,sun8i-a83t";
+
+ aliases {
+  serial0 = &uart0;
+ };
+
+ chosen {
+  stdout-path = "serial0:115200n8";
+ };
+};
+
+&uart0 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&uart0_pins_b>;
+ status = "okay";
+};

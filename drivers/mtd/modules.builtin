@@ -1,0 +1,5 @@
+kernel/drivers/mtd/mtd.ko
+kernel/drivers/mtd/ofpart.ko
+kernel/drivers/mtd/chips/chipreg.ko
+kernel/drivers/mtd/devices/m25p80.ko
+kernel/drivers/mtd/spi-nor/spi-nor.ko

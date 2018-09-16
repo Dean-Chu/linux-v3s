@@ -1,0 +1,14 @@
+kernel/drivers/hid/hid.ko
+kernel/drivers/hid/hid-generic.ko
+kernel/drivers/hid/hid-a4tech.ko
+kernel/drivers/hid/hid-apple.ko
+kernel/drivers/hid/hid-belkin.ko
+kernel/drivers/hid/hid-cherry.ko
+kernel/drivers/hid/hid-chicony.ko
+kernel/drivers/hid/hid-cypress.ko
+kernel/drivers/hid/hid-ezkey.ko
+kernel/drivers/hid/hid-kensington.ko
+kernel/drivers/hid/hid-logitech.ko
+kernel/drivers/hid/hid-microsoft.ko
+kernel/drivers/hid/hid-monterey.ko
+kernel/drivers/hid/usbhid/usbhid.ko

@@ -1,0 +1,2 @@
+kernel/drivers/leds/trigger/ledtrig-heartbeat.ko
+kernel/drivers/leds/trigger/ledtrig-default-on.ko

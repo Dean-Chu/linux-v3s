@@ -1,0 +1,1503 @@
+# 1 "arch/arm/boot/dts/sun8i-a33-q8-tablet.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "arch/arm/boot/dts/sun8i-a33-q8-tablet.dts"
+# 43 "arch/arm/boot/dts/sun8i-a33-q8-tablet.dts"
+/dts-v1/;
+# 1 "arch/arm/boot/dts/sun8i-a33.dtsi" 1
+# 45 "arch/arm/boot/dts/sun8i-a33.dtsi"
+# 1 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 1
+# 45 "arch/arm/boot/dts/sun8i-a23-a33.dtsi"
+# 1 "arch/arm/boot/dts/skeleton.dtsi" 1
+# 11 "arch/arm/boot/dts/skeleton.dtsi"
+/ {
+ #address-cells = <1>;
+ #size-cells = <1>;
+ chosen { };
+ aliases { };
+ memory { device_type = "memory"; reg = <0 0>; };
+};
+# 46 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 2
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 1
+
+
+
+
+
+
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/irq.h" 1
+# 9 "./arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 2
+# 48 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 2
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/clock/sun8i-a23-a33-ccu.h" 1
+# 50 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 2
+# 1 "./arch/arm/boot/dts/include/dt-bindings/pinctrl/sun4i-a10.h" 1
+# 51 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 2
+# 1 "./arch/arm/boot/dts/include/dt-bindings/reset/sun8i-a23-a33-ccu.h" 1
+# 52 "arch/arm/boot/dts/sun8i-a23-a33.dtsi" 2
+
+/ {
+ interrupt-parent = <&gic>;
+
+ chosen {
+  #address-cells = <1>;
+  #size-cells = <1>;
+  ranges;
+
+  simplefb_lcd: framebuffer@0 {
+   compatible = "allwinner,simple-framebuffer",
+         "simple-framebuffer";
+   allwinner,pipeline = "de_be0-lcd0";
+   clocks = <&ccu 38>, <&ccu 40>,
+     <&ccu 87>, <&ccu 85>,
+     <&ccu 84>, <&ccu 98>;
+   status = "disabled";
+  };
+ };
+
+ timer {
+  compatible = "arm,armv7-timer";
+  interrupts = <1 13 ((((1 << (4)) - 1) << 8) | 8)>,
+        <1 14 ((((1 << (4)) - 1) << 8) | 8)>,
+        <1 11 ((((1 << (4)) - 1) << 8) | 8)>,
+        <1 10 ((((1 << (4)) - 1) << 8) | 8)>;
+  clock-frequency = <24000000>;
+  arm,cpu-registers-not-fw-configured;
+ };
+
+ cpus {
+  enable-method = "allwinner,sun8i-a23";
+  #address-cells = <1>;
+  #size-cells = <0>;
+
+  cpu@0 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <0>;
+  };
+
+  cpu@1 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <1>;
+  };
+ };
+
+ clocks {
+  #address-cells = <1>;
+  #size-cells = <1>;
+  ranges;
+
+  osc24M: osc24M_clk {
+   #clock-cells = <0>;
+   compatible = "fixed-clock";
+   clock-frequency = <24000000>;
+   clock-output-names = "osc24M";
+  };
+
+  osc32k: osc32k_clk {
+   #clock-cells = <0>;
+   compatible = "fixed-clock";
+   clock-frequency = <32768>;
+   clock-output-names = "osc32k";
+  };
+ };
+
+ soc@01c00000 {
+  compatible = "simple-bus";
+  #address-cells = <1>;
+  #size-cells = <1>;
+  ranges;
+
+  dma: dma-controller@01c02000 {
+   compatible = "allwinner,sun8i-a23-dma";
+   reg = <0x01c02000 0x1000>;
+   interrupts = <0 50 4>;
+   clocks = <&ccu 25>;
+   resets = <&ccu 6>;
+   #dma-cells = <1>;
+  };
+
+  mmc0: mmc@01c0f000 {
+   compatible = "allwinner,sun7i-a20-mmc";
+   reg = <0x01c0f000 0x1000>;
+   clocks = <&ccu 26>,
+     <&ccu 60>,
+     <&ccu 62>,
+     <&ccu 61>;
+   clock-names = "ahb",
+          "mmc",
+          "output",
+          "sample";
+   resets = <&ccu 7>;
+   reset-names = "ahb";
+   interrupts = <0 60 4>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  mmc1: mmc@01c10000 {
+   compatible = "allwinner,sun7i-a20-mmc";
+   reg = <0x01c10000 0x1000>;
+   clocks = <&ccu 27>,
+     <&ccu 63>,
+     <&ccu 65>,
+     <&ccu 64>;
+   clock-names = "ahb",
+          "mmc",
+          "output",
+          "sample";
+   resets = <&ccu 8>;
+   reset-names = "ahb";
+   interrupts = <0 61 4>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  mmc2: mmc@01c11000 {
+   compatible = "allwinner,sun7i-a20-mmc";
+   reg = <0x01c11000 0x1000>;
+   clocks = <&ccu 28>,
+     <&ccu 66>,
+     <&ccu 68>,
+     <&ccu 67>;
+   clock-names = "ahb",
+          "mmc",
+          "output",
+          "sample";
+   resets = <&ccu 9>;
+   reset-names = "ahb";
+   interrupts = <0 62 4>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  nfc: nand@01c03000 {
+   compatible = "allwinner,sun4i-a10-nand";
+   reg = <0x01c03000 0x1000>;
+   interrupts = <0 70 4>;
+   clocks = <&ccu 29>, <&ccu 59>;
+   clock-names = "ahb", "mod";
+   resets = <&ccu 10>;
+   reset-names = "ahb";
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  usb_otg: usb@01c19000 {
+
+   reg = <0x01c19000 0x0400>;
+   clocks = <&ccu 34>;
+   resets = <&ccu 15>;
+   interrupts = <0 71 4>;
+   interrupt-names = "mc";
+   phys = <&usbphy 0>;
+   phy-names = "usb";
+   extcon = <&usbphy 0>;
+   status = "disabled";
+  };
+
+  usbphy: phy@01c19400 {
+
+
+
+
+   clocks = <&ccu 74>,
+     <&ccu 75>;
+   clock-names = "usb0_phy",
+          "usb1_phy";
+   resets = <&ccu 0>,
+     <&ccu 1>;
+   reset-names = "usb0_reset",
+          "usb1_reset";
+   status = "disabled";
+   #phy-cells = <1>;
+  };
+
+  ehci0: usb@01c1a000 {
+   compatible = "allwinner,sun8i-a23-ehci", "generic-ehci";
+   reg = <0x01c1a000 0x100>;
+   interrupts = <0 72 4>;
+   clocks = <&ccu 35>;
+   resets = <&ccu 16>;
+   phys = <&usbphy 1>;
+   phy-names = "usb";
+   status = "disabled";
+  };
+
+  ohci0: usb@01c1a400 {
+   compatible = "allwinner,sun8i-a23-ohci", "generic-ohci";
+   reg = <0x01c1a400 0x100>;
+   interrupts = <0 73 4>;
+   clocks = <&ccu 36>, <&ccu 78>;
+   resets = <&ccu 17>;
+   phys = <&usbphy 1>;
+   phy-names = "usb";
+   status = "disabled";
+  };
+
+  ccu: clock@01c20000 {
+   reg = <0x01c20000 0x400>;
+   clocks = <&osc24M>, <&osc32k>;
+   clock-names = "hosc", "losc";
+   #clock-cells = <1>;
+   #reset-cells = <1>;
+  };
+
+  pio: pinctrl@01c20800 {
+
+   reg = <0x01c20800 0x400>;
+
+   clocks = <&ccu 48>, <&osc24M>, <&osc32k>;
+   clock-names = "apb", "hosc", "losc";
+   gpio-controller;
+   interrupt-controller;
+   #interrupt-cells = <3>;
+   #gpio-cells = <3>;
+
+   uart0_pins_a: uart0@0 {
+    allwinner,pins = "PF2", "PF4";
+    allwinner,function = "uart0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   uart1_pins_a: uart1@0 {
+    allwinner,pins = "PG6", "PG7";
+    allwinner,function = "uart1";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   uart1_pins_cts_rts_a: uart1-cts-rts@0 {
+    allwinner,pins = "PG8", "PG9";
+    allwinner,function = "uart1";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   mmc0_pins_a: mmc0@0 {
+    allwinner,pins = "PF0", "PF1", "PF2",
+       "PF3", "PF4", "PF5";
+    allwinner,function = "mmc0";
+    allwinner,drive = <2>;
+    allwinner,pull = <0>;
+   };
+
+   mmc1_pins_a: mmc1@0 {
+    allwinner,pins = "PG0", "PG1", "PG2",
+       "PG3", "PG4", "PG5";
+    allwinner,function = "mmc1";
+    allwinner,drive = <2>;
+    allwinner,pull = <0>;
+   };
+
+   mmc2_8bit_pins: mmc2_8bit {
+    allwinner,pins = "PC5", "PC6", "PC8",
+       "PC9", "PC10", "PC11",
+       "PC12", "PC13", "PC14",
+       "PC15", "PC16";
+    allwinner,function = "mmc2";
+    allwinner,drive = <2>;
+    allwinner,pull = <0>;
+   };
+
+   pwm0_pins: pwm0 {
+    allwinner,pins = "PH0";
+    allwinner,function = "pwm0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   i2c0_pins_a: i2c0@0 {
+    allwinner,pins = "PH2", "PH3";
+    allwinner,function = "i2c0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   i2c1_pins_a: i2c1@0 {
+    allwinner,pins = "PH4", "PH5";
+    allwinner,function = "i2c1";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   i2c2_pins_a: i2c2@0 {
+    allwinner,pins = "PE12", "PE13";
+    allwinner,function = "i2c2";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+
+   lcd_rgb666_pins: lcd-rgb666@0 {
+    allwinner,pins = "PD2", "PD3", "PD4", "PD5", "PD6", "PD7",
+       "PD10", "PD11", "PD12", "PD13", "PD14", "PD15",
+                            "PD18", "PD19", "PD20", "PD21", "PD22", "PD23",
+                            "PD24", "PD25", "PD26", "PD27";
+    allwinner,function = "lcd0";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+  };
+
+  timer@01c20c00 {
+   compatible = "allwinner,sun4i-a10-timer";
+   reg = <0x01c20c00 0xa0>;
+   interrupts = <0 18 4>,
+         <0 19 4>;
+   clocks = <&osc24M>;
+  };
+
+  wdt0: watchdog@01c20ca0 {
+   compatible = "allwinner,sun6i-a31-wdt";
+   reg = <0x01c20ca0 0x20>;
+   interrupts = <0 25 4>;
+  };
+
+  pwm: pwm@01c21400 {
+   compatible = "allwinner,sun7i-a20-pwm";
+   reg = <0x01c21400 0xc>;
+   clocks = <&osc24M>;
+   #pwm-cells = <3>;
+   status = "disabled";
+  };
+
+  lradc: lradc@01c22800 {
+   compatible = "allwinner,sun4i-a10-lradc-keys";
+   reg = <0x01c22800 0x100>;
+   interrupts = <0 30 4>;
+   status = "disabled";
+  };
+
+  uart0: serial@01c28000 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c28000 0x400>;
+   interrupts = <0 0 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&ccu 54>;
+   resets = <&ccu 35>;
+   dmas = <&dma 6>, <&dma 6>;
+   dma-names = "rx", "tx";
+   status = "disabled";
+  };
+
+  uart1: serial@01c28400 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c28400 0x400>;
+   interrupts = <0 1 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&ccu 55>;
+   resets = <&ccu 36>;
+   dmas = <&dma 7>, <&dma 7>;
+   dma-names = "rx", "tx";
+   status = "disabled";
+  };
+
+  uart2: serial@01c28800 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c28800 0x400>;
+   interrupts = <0 2 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&ccu 56>;
+   resets = <&ccu 37>;
+   dmas = <&dma 8>, <&dma 8>;
+   dma-names = "rx", "tx";
+   status = "disabled";
+  };
+
+  uart3: serial@01c28c00 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c28c00 0x400>;
+   interrupts = <0 3 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&ccu 57>;
+   resets = <&ccu 38>;
+   dmas = <&dma 9>, <&dma 9>;
+   dma-names = "rx", "tx";
+   status = "disabled";
+  };
+
+  uart4: serial@01c29000 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01c29000 0x400>;
+   interrupts = <0 4 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&ccu 58>;
+   resets = <&ccu 39>;
+   dmas = <&dma 10>, <&dma 10>;
+   dma-names = "rx", "tx";
+   status = "disabled";
+  };
+
+  i2c0: i2c@01c2ac00 {
+   compatible = "allwinner,sun6i-a31-i2c";
+   reg = <0x01c2ac00 0x400>;
+   interrupts = <0 6 4>;
+   clocks = <&ccu 51>;
+   resets = <&ccu 32>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  i2c1: i2c@01c2b000 {
+   compatible = "allwinner,sun6i-a31-i2c";
+   reg = <0x01c2b000 0x400>;
+   interrupts = <0 7 4>;
+   clocks = <&ccu 52>;
+   resets = <&ccu 33>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  i2c2: i2c@01c2b400 {
+   compatible = "allwinner,sun6i-a31-i2c";
+   reg = <0x01c2b400 0x400>;
+   interrupts = <0 8 4>;
+   clocks = <&ccu 53>;
+   resets = <&ccu 34>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  gic: interrupt-controller@01c81000 {
+   compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
+   reg = <0x01c81000 0x1000>,
+         <0x01c82000 0x1000>,
+         <0x01c84000 0x2000>,
+         <0x01c86000 0x2000>;
+   interrupt-controller;
+   #interrupt-cells = <3>;
+   interrupts = <1 9 ((((1 << (4)) - 1) << 8) | 4)>;
+  };
+
+  rtc: rtc@01f00000 {
+   compatible = "allwinner,sun6i-a31-rtc";
+   reg = <0x01f00000 0x54>;
+   interrupts = <0 40 4>,
+         <0 41 4>;
+  };
+
+  nmi_intc: interrupt-controller@01f00c0c {
+   compatible = "allwinner,sun6i-a31-sc-nmi";
+   interrupt-controller;
+   #interrupt-cells = <2>;
+   reg = <0x01f00c0c 0x38>;
+   interrupts = <0 32 4>;
+  };
+
+  prcm@01f01400 {
+   compatible = "allwinner,sun8i-a23-prcm";
+   reg = <0x01f01400 0x200>;
+
+   ar100: ar100_clk {
+    compatible = "fixed-factor-clock";
+    #clock-cells = <0>;
+    clock-div = <1>;
+    clock-mult = <1>;
+    clocks = <&osc24M>;
+    clock-output-names = "ar100";
+   };
+
+   ahb0: ahb0_clk {
+    compatible = "fixed-factor-clock";
+    #clock-cells = <0>;
+    clock-div = <1>;
+    clock-mult = <1>;
+    clocks = <&ar100>;
+    clock-output-names = "ahb0";
+   };
+
+   apb0: apb0_clk {
+    compatible = "allwinner,sun8i-a23-apb0-clk";
+    #clock-cells = <0>;
+    clocks = <&ahb0>;
+    clock-output-names = "apb0";
+   };
+
+   apb0_gates: apb0_gates_clk {
+    compatible = "allwinner,sun8i-a23-apb0-gates-clk";
+    #clock-cells = <1>;
+    clocks = <&apb0>;
+    clock-output-names = "apb0_pio", "apb0_timer",
+      "apb0_rsb", "apb0_uart",
+      "apb0_i2c";
+   };
+
+   apb0_rst: apb0_rst {
+    compatible = "allwinner,sun6i-a31-clock-reset";
+    #reset-cells = <1>;
+   };
+  };
+
+  cpucfg@01f01c00 {
+   compatible = "allwinner,sun8i-a23-cpuconfig";
+   reg = <0x01f01c00 0x300>;
+  };
+
+  r_uart: serial@01f02800 {
+   compatible = "snps,dw-apb-uart";
+   reg = <0x01f02800 0x400>;
+   interrupts = <0 38 4>;
+   reg-shift = <2>;
+   reg-io-width = <4>;
+   clocks = <&apb0_gates 4>;
+   resets = <&apb0_rst 4>;
+   status = "disabled";
+  };
+
+  r_pio: pinctrl@01f02c00 {
+   compatible = "allwinner,sun8i-a23-r-pinctrl";
+   reg = <0x01f02c00 0x400>;
+   interrupts = <0 45 4>;
+   clocks = <&apb0_gates 0>, <&osc24M>, <&osc32k>;
+   clock-names = "apb", "hosc", "losc";
+   resets = <&apb0_rst 0>;
+   gpio-controller;
+   interrupt-controller;
+   #interrupt-cells = <3>;
+   #address-cells = <1>;
+   #size-cells = <0>;
+   #gpio-cells = <3>;
+
+   r_rsb_pins: r_rsb {
+    allwinner,pins = "PL0", "PL1";
+    allwinner,function = "s_rsb";
+    allwinner,drive = <1>;
+    allwinner,pull = <1>;
+   };
+
+   r_uart_pins_a: r_uart@0 {
+    allwinner,pins = "PL2", "PL3";
+    allwinner,function = "s_uart";
+    allwinner,drive = <0>;
+    allwinner,pull = <0>;
+   };
+  };
+
+  r_rsb: rsb@01f03400 {
+   compatible = "allwinner,sun8i-a23-rsb";
+   reg = <0x01f03400 0x400>;
+   interrupts = <0 39 4>;
+   clocks = <&apb0_gates 3>;
+   clock-frequency = <3000000>;
+   resets = <&apb0_rst 3>;
+   pinctrl-names = "default";
+   pinctrl-0 = <&r_rsb_pins>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+ };
+};
+# 46 "arch/arm/boot/dts/sun8i-a33.dtsi" 2
+
+/ {
+ cpus {
+  cpu@2 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <2>;
+  };
+
+  cpu@3 {
+   compatible = "arm,cortex-a7";
+   device_type = "cpu";
+   reg = <3>;
+  };
+ };
+
+ de: display-engine {
+  compatible = "allwinner,sun8i-a33-display-engine";
+  allwinner,pipelines = <&fe0>;
+  status = "disabled";
+ };
+
+ memory {
+  reg = <0x40000000 0x80000000>;
+ };
+
+ soc@01c00000 {
+  tcon0: lcd-controller@01c0c000 {
+   compatible = "allwinner,sun8i-a33-tcon";
+   reg = <0x01c0c000 0x1000>;
+   interrupts = <0 86 4>;
+   clocks = <&ccu 38>,
+     <&ccu 87>;
+   clock-names = "ahb",
+          "tcon-ch0";
+   clock-output-names = "tcon-pixel-clock";
+   resets = <&ccu 19>;
+   reset-names = "lcd";
+   status = "disabled";
+
+   ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    tcon0_in: port@0 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <0>;
+
+     tcon0_in_drc0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&drc0_out_tcon0>;
+     };
+    };
+
+    tcon0_out: port@1 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <1>;
+    };
+   };
+  };
+
+  crypto: crypto-engine@01c15000 {
+   compatible = "allwinner,sun4i-a10-crypto";
+   reg = <0x01c15000 0x1000>;
+   interrupts = <0 80 4>;
+   clocks = <&ccu 24>, <&ccu 69>;
+   clock-names = "ahb", "mod";
+   resets = <&ccu 5>;
+   reset-names = "ahb";
+  };
+
+  fe0: display-frontend@01e00000 {
+   compatible = "allwinner,sun8i-a33-display-frontend";
+   reg = <0x01e00000 0x20000>;
+   interrupts = <0 93 4>;
+   clocks = <&ccu 41>, <&ccu 86>,
+     <&ccu 83>;
+   clock-names = "ahb", "mod",
+          "ram";
+   resets = <&ccu 22>;
+   status = "disabled";
+
+   ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    fe0_out: port@1 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <1>;
+
+     fe0_out_be0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&be0_in_fe0>;
+     };
+    };
+   };
+  };
+
+  be0: display-backend@01e60000 {
+   compatible = "allwinner,sun8i-a33-display-backend";
+   reg = <0x01e60000 0x10000>, <0x01e80000 0x1000>;
+   reg-names = "be", "sat";
+   interrupts = <0 95 4>;
+   clocks = <&ccu 40>, <&ccu 85>,
+     <&ccu 84>, <&ccu 46>;
+   clock-names = "ahb", "mod",
+          "ram", "sat";
+   resets = <&ccu 21>, <&ccu 27>;
+   reset-names = "be", "sat";
+   assigned-clocks = <&ccu 85>;
+   assigned-clock-rates = <300000000>;
+
+   ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    be0_in: port@0 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <0>;
+
+     be0_in_fe0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&fe0_out_be0>;
+     };
+    };
+
+    be0_out: port@1 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <1>;
+
+     be0_out_drc0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&drc0_in_be0>;
+     };
+    };
+   };
+  };
+
+  drc0: drc@01e70000 {
+   compatible = "allwinner,sun8i-a33-drc";
+   reg = <0x01e70000 0x10000>;
+   interrupts = <0 91 4>;
+   clocks = <&ccu 45>, <&ccu 98>,
+     <&ccu 82>;
+   clock-names = "ahb", "mod", "ram";
+   resets = <&ccu 26>;
+
+   assigned-clocks = <&ccu 98>;
+   assigned-clock-rates = <300000000>;
+
+   ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    drc0_in: port@0 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <0>;
+
+     drc0_in_be0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&be0_out_drc0>;
+     };
+    };
+
+    drc0_out: port@1 {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     reg = <1>;
+
+     drc0_out_tcon0: endpoint@0 {
+      reg = <0>;
+      remote-endpoint = <&tcon0_in_drc0>;
+     };
+    };
+   };
+  };
+ };
+};
+
+&ccu {
+ compatible = "allwinner,sun8i-a33-ccu";
+};
+
+&pio {
+ compatible = "allwinner,sun8i-a33-pinctrl";
+ interrupts = <0 15 4>,
+       <0 17 4>;
+
+ uart0_pins_b: uart0@1 {
+  allwinner,pins = "PB0", "PB1";
+  allwinner,function = "uart0";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+};
+
+&usb_otg {
+ compatible = "allwinner,sun8i-a33-musb";
+};
+
+&usbphy {
+ compatible = "allwinner,sun8i-a33-usb-phy";
+ reg = <0x01c19400 0x14>, <0x01c1a800 0x4>;
+ reg-names = "phy_ctrl", "pmu1";
+};
+# 45 "arch/arm/boot/dts/sun8i-a33-q8-tablet.dts" 2
+# 1 "arch/arm/boot/dts/sun8i-q8-common.dtsi" 1
+# 42 "arch/arm/boot/dts/sun8i-q8-common.dtsi"
+# 1 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 1
+# 43 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi"
+# 1 "./arch/arm/boot/dts/include/dt-bindings/gpio/gpio.h" 1
+# 44 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 2
+# 1 "./arch/arm/boot/dts/include/dt-bindings/input/input.h" 1
+# 12 "./arch/arm/boot/dts/include/dt-bindings/input/input.h"
+# 1 "./arch/arm/boot/dts/include/dt-bindings/input/linux-event-codes.h" 1
+# 13 "./arch/arm/boot/dts/include/dt-bindings/input/input.h" 2
+# 45 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 2
+
+# 1 "arch/arm/boot/dts/sunxi-common-regulators.dtsi" 1
+# 48 "arch/arm/boot/dts/sunxi-common-regulators.dtsi"
+&pio {
+ ahci_pwr_pin_a: ahci_pwr_pin@0 {
+  allwinner,pins = "PB8";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb0_vbus_pin_a: usb0_vbus_pin@0 {
+  allwinner,pins = "PB9";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb1_vbus_pin_a: usb1_vbus_pin@0 {
+  allwinner,pins = "PH6";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb2_vbus_pin_a: usb2_vbus_pin@0 {
+  allwinner,pins = "PH3";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+};
+
+/ {
+ reg_ahci_5v: ahci-5v {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&ahci_pwr_pin_a>;
+  regulator-name = "ahci-5v";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 1 8 0>;
+  status = "disabled";
+ };
+
+ reg_usb0_vbus: usb0-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb0_vbus_pin_a>;
+  regulator-name = "usb0-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  enable-active-high;
+  gpio = <&pio 1 9 0>;
+  status = "disabled";
+ };
+
+ reg_usb1_vbus: usb1-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb1_vbus_pin_a>;
+  regulator-name = "usb1-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 7 6 0>;
+  status = "disabled";
+ };
+
+ reg_usb2_vbus: usb2-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb2_vbus_pin_a>;
+  regulator-name = "usb2-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 7 3 0>;
+  status = "disabled";
+ };
+
+ reg_vcc3v0: vcc3v0 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc3v0";
+  regulator-min-microvolt = <3000000>;
+  regulator-max-microvolt = <3000000>;
+ };
+
+ reg_vcc3v3: vcc3v3 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc3v3";
+  regulator-min-microvolt = <3300000>;
+  regulator-max-microvolt = <3300000>;
+ };
+
+ reg_vcc5v0: vcc5v0 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc5v0";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+ };
+};
+# 47 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 2
+
+&i2c0 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&i2c0_pins_a>;
+ status = "okay";
+};
+
+&i2c1 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&i2c1_pins_a>;
+ status = "okay";
+};
+
+&lradc {
+ vref-supply = <&reg_vcc3v0>;
+ status = "okay";
+
+ button@200 {
+  label = "Volume Up";
+  linux,code = <115>;
+  channel = <0>;
+  voltage = <200000>;
+ };
+
+ button@400 {
+  label = "Volume Down";
+  linux,code = <114>;
+  channel = <0>;
+  voltage = <400000>;
+ };
+};
+
+&pwm {
+ pinctrl-names = "default";
+ pinctrl-0 = <&pwm0_pins>;
+ status = "okay";
+};
+# 43 "arch/arm/boot/dts/sun8i-q8-common.dtsi" 2
+# 1 "arch/arm/boot/dts/sun8i-reference-design-tablet.dtsi" 1
+# 42 "arch/arm/boot/dts/sun8i-reference-design-tablet.dtsi"
+# 1 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 1
+# 46 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi"
+# 1 "arch/arm/boot/dts/sunxi-common-regulators.dtsi" 1
+# 48 "arch/arm/boot/dts/sunxi-common-regulators.dtsi"
+&pio {
+ ahci_pwr_pin_a: ahci_pwr_pin@0 {
+  allwinner,pins = "PB8";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb0_vbus_pin_a: usb0_vbus_pin@0 {
+  allwinner,pins = "PB9";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb1_vbus_pin_a: usb1_vbus_pin@0 {
+  allwinner,pins = "PH6";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb2_vbus_pin_a: usb2_vbus_pin@0 {
+  allwinner,pins = "PH3";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+};
+
+/ {
+ reg_ahci_5v: ahci-5v {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&ahci_pwr_pin_a>;
+  regulator-name = "ahci-5v";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 1 8 0>;
+  status = "disabled";
+ };
+
+ reg_usb0_vbus: usb0-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb0_vbus_pin_a>;
+  regulator-name = "usb0-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  enable-active-high;
+  gpio = <&pio 1 9 0>;
+  status = "disabled";
+ };
+
+ reg_usb1_vbus: usb1-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb1_vbus_pin_a>;
+  regulator-name = "usb1-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 7 6 0>;
+  status = "disabled";
+ };
+
+ reg_usb2_vbus: usb2-vbus {
+  compatible = "regulator-fixed";
+  pinctrl-names = "default";
+  pinctrl-0 = <&usb2_vbus_pin_a>;
+  regulator-name = "usb2-vbus";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+  regulator-boot-on;
+  enable-active-high;
+  gpio = <&pio 7 3 0>;
+  status = "disabled";
+ };
+
+ reg_vcc3v0: vcc3v0 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc3v0";
+  regulator-min-microvolt = <3000000>;
+  regulator-max-microvolt = <3000000>;
+ };
+
+ reg_vcc3v3: vcc3v3 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc3v3";
+  regulator-min-microvolt = <3300000>;
+  regulator-max-microvolt = <3300000>;
+ };
+
+ reg_vcc5v0: vcc5v0 {
+  compatible = "regulator-fixed";
+  regulator-name = "vcc5v0";
+  regulator-min-microvolt = <5000000>;
+  regulator-max-microvolt = <5000000>;
+ };
+};
+# 47 "arch/arm/boot/dts/sunxi-reference-design-tablet.dtsi" 2
+
+&i2c0 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&i2c0_pins_a>;
+ status = "okay";
+};
+
+&i2c1 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&i2c1_pins_a>;
+ status = "okay";
+};
+
+&lradc {
+ vref-supply = <&reg_vcc3v0>;
+ status = "okay";
+
+ button@200 {
+  label = "Volume Up";
+  linux,code = <115>;
+  channel = <0>;
+  voltage = <200000>;
+ };
+
+ button@400 {
+  label = "Volume Down";
+  linux,code = <114>;
+  channel = <0>;
+  voltage = <400000>;
+ };
+};
+
+&pwm {
+ pinctrl-names = "default";
+ pinctrl-0 = <&pwm0_pins>;
+ status = "okay";
+};
+# 43 "arch/arm/boot/dts/sun8i-reference-design-tablet.dtsi" 2
+
+# 1 "./arch/arm/boot/dts/include/dt-bindings/pwm/pwm.h" 1
+# 45 "arch/arm/boot/dts/sun8i-reference-design-tablet.dtsi" 2
+
+/ {
+ aliases {
+  serial0 = &r_uart;
+ };
+
+ backlight: backlight {
+  compatible = "pwm-backlight";
+  pinctrl-names = "default";
+  pinctrl-0 = <&bl_en_pin>;
+  pwms = <&pwm 0 50000 (1 << 0)>;
+  brightness-levels = <0 10 20 30 40 50 60 70 80 90 100>;
+  default-brightness-level = <8>;
+  enable-gpios = <&pio 7 6 0>;
+ };
+
+ chosen {
+  stdout-path = "serial0:115200n8";
+ };
+};
+
+&i2c0 {
+
+
+
+
+
+ clock-frequency = <400000>;
+
+ touchscreen: touchscreen@0 {
+  interrupt-parent = <&pio>;
+  interrupts = <1 5 2>;
+  pinctrl-names = "default";
+  pinctrl-0 = <&ts_power_pin>;
+  power-gpios = <&pio 7 1 0>;
+
+  status = "disabled";
+ };
+};
+
+&mmc0 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&mmc0_pins_a>, <&mmc0_cd_pin>;
+ vmmc-supply = <&reg_dcdc1>;
+ bus-width = <4>;
+ cd-gpios = <&pio 1 4 0>;
+ cd-inverted;
+ status = "okay";
+};
+
+&pio {
+ bl_en_pin: bl_en_pin@0 {
+  allwinner,pins = "PH6";
+  allwinner,function = "gpio_in";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ mmc0_cd_pin: mmc0_cd_pin@0 {
+  allwinner,pins = "PB4";
+  allwinner,function = "gpio_in";
+  allwinner,drive = <0>;
+  allwinner,pull = <1>;
+ };
+
+ ts_power_pin: ts_power_pin@0 {
+  allwinner,pins = "PH1";
+  allwinner,function = "gpio_out";
+  allwinner,drive = <0>;
+  allwinner,pull = <0>;
+ };
+
+ usb0_id_detect_pin: usb0_id_detect_pin@0 {
+  allwinner,pins = "PH8";
+  allwinner,function = "gpio_in";
+  allwinner,drive = <0>;
+  allwinner,pull = <1>;
+ };
+};
+
+&r_rsb {
+ status = "okay";
+
+ axp22x: pmic@3a3 {
+  compatible = "x-powers,axp223";
+  reg = <0x3a3>;
+  interrupt-parent = <&nmi_intc>;
+  interrupts = <0 8>;
+  eldoin-supply = <&reg_dcdc1>;
+  drivevbus-supply = <&reg_vcc5v0>;
+  x-powers,drive-vbus-en;
+ };
+};
+
+# 1 "arch/arm/boot/dts/axp22x.dtsi" 1
+# 51 "arch/arm/boot/dts/axp22x.dtsi"
+&axp22x {
+ interrupt-controller;
+ #interrupt-cells = <1>;
+
+ regulators {
+
+  x-powers,dcdc-freq = <3000>;
+
+  reg_dcdc1: dcdc1 {
+   regulator-name = "dcdc1";
+  };
+
+  reg_dcdc2: dcdc2 {
+   regulator-name = "dcdc2";
+  };
+
+  reg_dcdc3: dcdc3 {
+   regulator-name = "dcdc3";
+  };
+
+  reg_dcdc4: dcdc4 {
+   regulator-name = "dcdc4";
+  };
+
+  reg_dcdc5: dcdc5 {
+   regulator-name = "dcdc5";
+  };
+
+  reg_dc1sw: dc1sw {
+   regulator-name = "dc1sw";
+  };
+
+  reg_dc5ldo: dc5ldo {
+   regulator-name = "dc5ldo";
+  };
+
+  reg_aldo1: aldo1 {
+   regulator-name = "aldo1";
+  };
+
+  reg_aldo2: aldo2 {
+   regulator-name = "aldo2";
+  };
+
+  reg_aldo3: aldo3 {
+   regulator-name = "aldo3";
+  };
+
+  reg_dldo1: dldo1 {
+   regulator-name = "dldo1";
+  };
+
+  reg_dldo2: dldo2 {
+   regulator-name = "dldo2";
+  };
+
+  reg_dldo3: dldo3 {
+   regulator-name = "dldo3";
+  };
+
+  reg_dldo4: dldo4 {
+   regulator-name = "dldo4";
+  };
+
+  reg_eldo1: eldo1 {
+   regulator-name = "eldo1";
+  };
+
+  reg_eldo2: eldo2 {
+   regulator-name = "eldo2";
+  };
+
+  reg_eldo3: eldo3 {
+   regulator-name = "eldo3";
+  };
+
+  reg_ldo_io0: ldo_io0 {
+   regulator-name = "ldo_io0";
+   status = "disabled";
+  };
+
+  reg_ldo_io1: ldo_io1 {
+   regulator-name = "ldo_io1";
+   status = "disabled";
+  };
+
+  reg_rtc_ldo: rtc_ldo {
+
+   regulator-always-on;
+   regulator-min-microvolt = <3000000>;
+   regulator-max-microvolt = <3000000>;
+   regulator-name = "rtc_ldo";
+  };
+
+  reg_drivevbus: drivevbus {
+   regulator-name = "drivevbus";
+   status = "disabled";
+  };
+ };
+
+ usb_power_supply: usb_power_supply {
+  compatible = "x-powers,axp221-usb-power-supply";
+  status = "disabled";
+ };
+};
+# 140 "arch/arm/boot/dts/sun8i-reference-design-tablet.dtsi" 2
+
+&reg_aldo1 {
+ regulator-always-on;
+ regulator-min-microvolt = <3000000>;
+ regulator-max-microvolt = <3000000>;
+ regulator-name = "vcc-io";
+};
+
+&reg_aldo2 {
+ regulator-always-on;
+ regulator-min-microvolt = <2350000>;
+ regulator-max-microvolt = <2650000>;
+ regulator-name = "vdd-dll";
+};
+
+&reg_aldo3 {
+ regulator-always-on;
+ regulator-min-microvolt = <2700000>;
+ regulator-max-microvolt = <3300000>;
+ regulator-name = "vcc-pll-avcc";
+};
+
+&reg_dc1sw {
+ regulator-name = "vcc-lcd";
+};
+
+&reg_dc5ldo {
+ regulator-always-on;
+ regulator-min-microvolt = <900000>;
+ regulator-max-microvolt = <1400000>;
+ regulator-name = "vdd-cpus";
+};
+
+&reg_dcdc1 {
+ regulator-always-on;
+ regulator-min-microvolt = <3000000>;
+ regulator-max-microvolt = <3000000>;
+ regulator-name = "vcc-3v0";
+};
+
+&reg_dcdc2 {
+ regulator-always-on;
+ regulator-min-microvolt = <900000>;
+ regulator-max-microvolt = <1400000>;
+ regulator-name = "vdd-sys";
+};
+
+&reg_dcdc3 {
+ regulator-always-on;
+ regulator-min-microvolt = <900000>;
+ regulator-max-microvolt = <1400000>;
+ regulator-name = "vdd-cpu";
+};
+
+&reg_dcdc5 {
+ regulator-always-on;
+ regulator-min-microvolt = <1500000>;
+ regulator-max-microvolt = <1500000>;
+ regulator-name = "vcc-dram";
+};
+
+&reg_dldo1 {
+ regulator-min-microvolt = <3300000>;
+ regulator-max-microvolt = <3300000>;
+ regulator-name = "vcc-wifi";
+};
+
+&reg_drivevbus {
+ regulator-name = "usb0-vbus";
+ status = "okay";
+};
+
+&reg_ldo_io1 {
+ regulator-min-microvolt = <3300000>;
+ regulator-max-microvolt = <3300000>;
+ regulator-name = "vcc-touchscreen";
+ status = "okay";
+};
+
+&reg_rtc_ldo {
+ regulator-name = "vcc-rtc";
+};
+
+&r_uart {
+ pinctrl-names = "default";
+ pinctrl-0 = <&r_uart_pins_a>;
+ status = "okay";
+};
+
+&simplefb_lcd {
+ vcc-lcd-supply = <&reg_dc1sw>;
+};
+
+&usb_otg {
+ dr_mode = "otg";
+ status = "okay";
+};
+
+&usb_power_supply {
+ status = "okay";
+};
+
+&usbphy {
+ pinctrl-names = "default";
+ pinctrl-0 = <&usb0_id_detect_pin>;
+ usb0_id_det-gpio = <&pio 7 8 0>;
+ usb0_vbus_power-supply = <&usb_power_supply>;
+ usb0_vbus-supply = <&reg_drivevbus>;
+ status = "okay";
+};
+# 44 "arch/arm/boot/dts/sun8i-q8-common.dtsi" 2
+
+/ {
+ aliases {
+  serial0 = &r_uart;
+
+  ethernet0 = &sdio_wifi;
+ };
+
+ wifi_pwrseq: wifi_pwrseq {
+  compatible = "mmc-pwrseq-simple";
+
+
+
+
+
+
+  pinctrl-names = "default";
+  pinctrl-0 = <&wifi_pwrseq_pin_q8>;
+
+  post-power-on-delay-ms = <200>;
+ };
+};
+
+&ehci0 {
+ status = "okay";
+};
+
+&mmc1 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&mmc1_pins_a>;
+ vmmc-supply = <&reg_dldo1>;
+ mmc-pwrseq = <&wifi_pwrseq>;
+ bus-width = <4>;
+ non-removable;
+ status = "okay";
+
+ sdio_wifi: sdio_wifi@1 {
+  reg = <1>;
+ };
+};
+
+&mmc1_pins_a {
+ allwinner,pull = <1>;
+};
+
+&r_pio {
+ wifi_pwrseq_pin_q8: wifi_pwrseq_pin@0 {
+  allwinner,pins = "PL6", "PL7", "PL11";
+  allwinner,function = "gpio_in";
+  allwinner,drive = <0>;
+  allwinner,pull = <1>;
+ };
+};
+
+&usbphy {
+ usb1_vbus-supply = <&reg_dldo1>;
+};
+# 46 "arch/arm/boot/dts/sun8i-a33-q8-tablet.dts" 2
+
+/ {
+ model = "Q8 A33 Tablet";
+ compatible = "allwinner,q8-a33", "allwinner,sun8i-a33";
+};

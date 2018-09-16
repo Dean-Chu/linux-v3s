@@ -1,0 +1,13 @@
+sun8i-v3s-licheepi-zero-dock.o: \
+ arch/arm/boot/dts/sun8i-v3s-licheepi-zero-dock.dts \
+ arch/arm/boot/dts/include/dt-bindings/input/input.h \
+ arch/arm/boot/dts/include/dt-bindings/input/linux-event-codes.h \
+ arch/arm/boot/dts/sun8i-v3s-licheepi-zero.dts \
+ arch/arm/boot/dts/sun8i-v3s.dtsi \
+ arch/arm/boot/dts/include/dt-bindings/clock/sun8i-v3s-ccu.h \
+ arch/arm/boot/dts/include/dt-bindings/reset/sun8i-v3s-ccu.h \
+ arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h \
+ arch/arm/boot/dts/include/dt-bindings/interrupt-controller/irq.h \
+ arch/arm/boot/dts/include/dt-bindings/pinctrl/sun4i-a10.h \
+ arch/arm/boot/dts/sunxi-common-regulators.dtsi \
+ arch/arm/boot/dts/include/dt-bindings/gpio/gpio.h

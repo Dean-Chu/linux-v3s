@@ -1,0 +1,9 @@
+kernel/drivers/gpu/drm/drm_kms_helper.ko
+kernel/drivers/gpu/drm/drm.ko
+kernel/drivers/gpu/drm/bridge/dumb-vga-dac.ko
+kernel/drivers/gpu/drm/panel/panel-simple.ko
+kernel/drivers/gpu/drm/sun4i/sun4i-drm.ko
+kernel/drivers/gpu/drm/sun4i/sun4i-tcon.ko
+kernel/drivers/gpu/drm/sun4i/sun4i_backend.ko
+kernel/drivers/gpu/drm/sun4i/sun6i_drc.ko
+kernel/drivers/gpu/drm/sun4i/sun4i_tv.ko

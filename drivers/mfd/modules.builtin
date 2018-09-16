@@ -1,0 +1,4 @@
+kernel/drivers/mfd/mfd-core.ko
+kernel/drivers/mfd/axp20x.ko
+kernel/drivers/mfd/axp20x-i2c.ko
+kernel/drivers/mfd/axp20x-rsb.ko

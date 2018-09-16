@@ -1,0 +1,8 @@
+kernel/net/dns_resolver/dns_resolver.ko
+kernel/net/ipv4/tcp_cubic.ko
+kernel/net/mac80211/mac80211.ko
+kernel/net/packet/af_packet.ko
+kernel/net/sunrpc/sunrpc.ko
+kernel/net/sunrpc/auth_gss/auth_rpcgss.ko
+kernel/net/unix/unix.ko
+kernel/net/wireless/cfg80211.ko

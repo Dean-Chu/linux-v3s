@@ -1,0 +1,3 @@
+kernel/sound/soc/snd-soc-core.ko
+kernel/sound/soc/sunxi/sun4i-codec.ko
+kernel/sound/soc/sunxi/sun8i-codec-analog.ko
